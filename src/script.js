@@ -1,5 +1,7 @@
 import { bootstrapExtra } from "@workadventure/scripting-api-extra";
 import { getLayersMap } from "@workadventure/scripting-api-extra";
+import { levelUp } from "@workadventure/quests";
+
 bootstrapExtra();
 
 console.log("Script started successfully")
@@ -85,6 +87,7 @@ WA.ui.actionBar.addButton({
     }
 })
 
+
 /******************************************************
  * Mox functions
  */
@@ -135,6 +138,133 @@ export function initTables() {
     decrementPlayerCount(tablenameJoto);
   });
 }
+
+WA.onInit().then(async () => {
+	
+    console.log("Scripting API ready")
+    console.log("Player tags: ", WA.player.tags)
+    var pos= await WA.player.getPosition()
+   if(pos.x<2100){
+        currentPopup =   WA.ui.openPopup(popUpStart, startMsg,[
+    
+        {
+            label: "OK",
+            callback: (popup => {
+                closePopUp();
+            })
+        }]);
+
+   }
+    
+WA.room.onEnterLayer("pollZone").subscribe(() => {
+  WA.ui.actionBar.addButton({
+    id:"closePoll",
+    type:"action",
+    imageSrc:"https://flaticons.net/icon.php?slug_category=mobile-application&slug_icon=close",
+    toolTip:"Close Poll",
+    callback: async () => {
+      if(WA.state.pollOpen === true){
+        switch(WA.player.state.vote){
+          case "pos":
+            console.log("yes quest xp granted")
+            levelUp("yes_sayer_quest", 100);
+            break;
+          case "neg":
+            console.log("no quest xp granted")
+            break;
+          case "neut":
+            console.log("neut quest xp granted")
+            break;
+          case "0":
+            break;
+        }
+      }
+      WA.state.pollOpen = false;
+      console.log(WA.state.pollOpen)
+    }
+  })
+
+  WA.ui.actionBar.addButton({
+    id:"resetPoll",
+    type:"action",
+    imageSrc:"https://flaticons.net/icon.php?slug_category=application&slug_icon=command-reset",
+    toolTip:"Reset Poll",
+    callback: async () => {
+      WA.state.pollOpen = true;
+      WA.state.voteNeg = 0;
+      WA.state.votePos = 0,
+      WA.state.voteNeut = 0,
+      console.log(WA.state.pollOpen)
+      }
+  })
+})
+
+WA.room.onLeaveLayer("pollZone").subscribe(() => {
+  WA.ui.actionBar.removeButton("resetPoll");
+  WA.ui.actionBar.removeButton("closePoll");
+})
+
+WA.room.onEnterLayer("votePos").subscribe(() => {
+  if(WA.state.pollOpen === true){  
+    WA.player.state.vote = "pos";
+    console.log(WA.player.state.vote) 
+    console.log("VotePos: ", WA.state.votePos)
+    WA.state.votePos++
+  }
+})
+WA.room.onLeaveLayer("votePos").subscribe(() => {
+  WA.player.state.vote = "0";
+  if(WA.state.pollOpen === true){
+    console.log("VotePos: ", WA.state.votePos)
+    console.log(WA.player.state.vote)
+    if (WA.state.votePos === 0) return
+    WA.state.votePos--
+  }
+})
+WA.room.onEnterLayer("voteNeg").subscribe(() => {
+  if(WA.state.pollOpen === true){
+    console.log("voteNeg: ", WA.state.voteNeg)
+    WA.player.state.vote = "neg";
+    console.log(WA.player.state.vote)
+    WA.state.voteNeg++
+  }
+})
+WA.room.onLeaveLayer("voteNeg").subscribe(() => {
+  WA.player.state.vote = "0";
+  if(WA.state.pollOpen === true){
+    console.log("voteNeg: ", WA.state.voteNeg)
+    console.log(WA.player.state.vote)
+    if (WA.state.voteNeg === 0) return
+    WA.state.voteNeg--
+    }
+})
+WA.room.onEnterLayer("voteNeut").subscribe(() => {
+  if(WA.state.pollOpen === true){
+    console.log("voteNeut: ", WA.state.voteNeut)
+    WA.player.state.vote = "neut";
+    console.log(WA.player.state.vote)
+    WA.state.voteNeut++
+  }
+})
+WA.room.onLeaveLayer("voteNeut").subscribe(() => {
+  WA.player.state.vote = "0";
+  if(WA.state.pollOpen === true){
+    console.log("voteNeut: ", WA.state.voteNeut)
+    console.log(WA.player.state.vote)
+    if (WA.state.voteNeut === 0) return
+    WA.state.voteNeut--
+  }
+})
+    
+
+    // The line below bootstraps the Scripting API Extra library that adds a number of advanced properties/features to WorkAdventure
+    bootstrapExtra()
+      .then(() => {
+        console.log("Scripting API Extra ready")
+    
+      })
+      .catch(e => console.error(e))
+  })
 
 /**
  * Load the current table status and increment the player counter
