@@ -257,6 +257,10 @@ WA.room.onLeaveLayer("voteNeut").subscribe(() => {
     WA.state.voteNeut--
   }
 })
+WA.room.onEnterLayer("talkingZoneLayer").subscribe(() => {
+  console.log("zone works");
+  levelUp("access_meeting_zone", 100);
+})
     
 
     // The line below bootstraps the Scripting API Extra library that adds a number of advanced properties/features to WorkAdventure
@@ -323,6 +327,4 @@ function pushPlayer(currentLayer) {
     });
   });
 }
-
-
 export {}
