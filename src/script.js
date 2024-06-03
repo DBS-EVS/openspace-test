@@ -175,7 +175,7 @@ WA.room.onEnterLayer("pollZone").subscribe(() => {
             break;
           case "neut":
             console.log("neut quest xp granted")
-            levelUp("net_sayer_quest", 100);
+            levelUp("neutral_sayer_quest", 100);
             break;
           case "0":
             break;
