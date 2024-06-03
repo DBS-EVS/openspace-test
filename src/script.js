@@ -259,7 +259,7 @@ WA.room.onLeaveLayer("voteNeut").subscribe(() => {
 })
 WA.room.onEnterLayer("talkingZoneLayer").subscribe(() => {
   console.log("zone works");
-  levelUp("access_meeting_zone", 100);
+  levelUp("access_meeting_zone", 5);
 })
     
 
