@@ -9,7 +9,7 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 index: "./index.html",
-                result: "./result.html",
+                result: "../result.html",
                 ...getMapsScripts(maps),
             },
         },
