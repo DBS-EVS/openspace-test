@@ -1561,12 +1561,7 @@
                         {
                          "name":"autoOpen",
                          "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"code",
-                         "type":"string",
-                         "value":"0000"
+                         "value":true
                         }, 
                         {
                          "name":"doorVariable",
@@ -8636,24 +8631,6 @@
                  "width":0,
                  "x":1062.16666666667,
                  "y":2327.66666666667
-                }, 
-                {
-                 "height":0,
-                 "id":138,
-                 "name":"playerList",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"playerList",
-                         "type":"string",
-                         "value":"TEAST!!!!"
-                        }],
-                 "rotation":0,
-                 "type":"variable",
-                 "visible":true,
-                 "width":0,
-                 "x":1462,
-                 "y":2296
                 }],
          "opacity":1,
          "properties":[
@@ -11307,8 +11284,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":198,
- "nextobjectid":139,
+ "nextlayerid":197,
+ "nextobjectid":138,
  "orientation":"orthogonal",
  "properties":[
         {
