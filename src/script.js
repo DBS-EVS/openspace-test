@@ -275,7 +275,7 @@ WA.room.onEnterLayer("talkingZoneLayer").subscribe(() => {
 
 //Grating XP for opening doors
 
-const door_layers = ["autodoors/autoRoom0","autoRoom1","autodoors/autoRoom2","autodoors/autoRoom3","autodoors/autoRoom4","autodoors/autoRoom5","autodoors/autoRoomWired"];
+const door_layers = ["autodoors/autoRoom0","autoRoom1outside","autodoors/autoRoom2","autodoors/autoRoom1inside","autodoors/autoRoom3","autodoors/autoRoom4","autodoors/autoRoom5","autodoors/autoRoomWired"];
 for(let i = 0; i < door_layers.length; i++){
   WA.room.onEnterLayer(door_layers[i]).subscribe(() => {
     console.log("zone works");
